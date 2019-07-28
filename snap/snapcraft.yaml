@@ -1,0 +1,48 @@
+name: rtsp-test-server
+base: core18
+version: git
+summary: Simple server providing some test rtsp streams
+description: |
+    Based on GStreamer RTSP Server.
+    Available urls:
+    rtsp://example.com:8554/bars
+    rtsp://example.com:8554/white
+    rtsp://example.com:8554/black
+    rtsp://example.com:8554/red
+    rtsp://example.com:8554/green
+    rtsp://example.com:8554/blue
+license: GPL-3.0
+grade: devel
+confinement: strict
+
+architectures:
+  - build-on: amd64
+  - build-on: i386
+  - build-on: armhf
+
+environment:
+  GST_DEBUG: 3
+  GST_DEBUG_NO_COLOR: 1
+  GST_PLUGIN_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gstreamer-1.0
+  GST_PLUGIN_SYSTEM_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gstreamer-1.0
+  GST_PLUGIN_SCANNER: $SNAP/usr/libexec/$SNAPCRAFT_ARCH_TRIPLET/gstreamer-1.0/gst-plugin-scanner
+
+parts:
+  server:
+    plugin: cmake
+    source: https://github.com/RSATom/rtsp-test-server.git
+    build-packages:
+      - g++
+      - make
+      - libgstreamer1.0-dev
+      - libgstrtspserver-1.0-dev
+    stage-packages:
+      - libgstrtspserver-1.0-0
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-ugly
+      - gstreamer1.0-libav
+
+apps:
+  rtsp-test-server:
+    command: rtsp-test-server
+    daemon: simple
