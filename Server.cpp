@@ -36,7 +36,8 @@ int main(int argc, char *argv[])
         gst_rtsp_media_factory_set_launch(barsFactory,
             "( videotestsrc pattern=smpte100 ! "
             "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 )");
+            "rtph264pay name=pay0 pt=96 config-interval=-1 "
+            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
         gst_rtsp_media_factory_set_shared(barsFactory, TRUE);
         gst_rtsp_mount_points_add_factory(mountPoints, BARS, barsFactory);
     }
@@ -48,7 +49,8 @@ int main(int argc, char *argv[])
         gst_rtsp_media_factory_set_launch(whiteScreenFactory,
             "( videotestsrc pattern=white ! "
             "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 )");
+            "rtph264pay name=pay0 pt=96 config-interval=-1 "
+            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
         gst_rtsp_media_factory_set_shared(whiteScreenFactory, TRUE);
         gst_rtsp_mount_points_add_factory(mountPoints, WHITE, whiteScreenFactory);
     }
@@ -60,7 +62,8 @@ int main(int argc, char *argv[])
         gst_rtsp_media_factory_set_launch(blackScreenFactory,
             "( videotestsrc pattern=black ! "
             "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 )");
+            "rtph264pay name=pay0 pt=96 config-interval=-1 "
+            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
         gst_rtsp_media_factory_set_shared(blackScreenFactory, TRUE);
         gst_rtsp_mount_points_add_factory(mountPoints, BLACK, blackScreenFactory);
     }
@@ -72,7 +75,8 @@ int main(int argc, char *argv[])
         gst_rtsp_media_factory_set_launch(redScreenFactory,
             "( videotestsrc pattern=red ! "
             "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 )");
+            "rtph264pay name=pay0 pt=96 config-interval=-1 "
+            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
         gst_rtsp_media_factory_set_shared(redScreenFactory, TRUE);
         gst_rtsp_mount_points_add_factory(mountPoints, RED, redScreenFactory);
     }
@@ -84,7 +88,8 @@ int main(int argc, char *argv[])
         gst_rtsp_media_factory_set_launch(greenScreenFactory,
             "( videotestsrc pattern=green ! "
             "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 )");
+            "rtph264pay name=pay0 pt=96 config-interval=-1 "
+            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
         gst_rtsp_media_factory_set_shared(greenScreenFactory, TRUE);
         gst_rtsp_mount_points_add_factory(mountPoints, GREEN, greenScreenFactory);
     }
@@ -96,7 +101,8 @@ int main(int argc, char *argv[])
         gst_rtsp_media_factory_set_launch(blueScreenFactory,
             "( videotestsrc pattern=blue ! "
             "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 )");
+            "rtph264pay name=pay0 pt=96 config-interval=-1 "
+            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
         gst_rtsp_media_factory_set_shared(blueScreenFactory, TRUE);
         gst_rtsp_mount_points_add_factory(mountPoints, BLUE, blueScreenFactory);
     }
