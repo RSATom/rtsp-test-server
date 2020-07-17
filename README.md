@@ -2,6 +2,8 @@
 
 Simple RTSP server based on GStreamer.
 
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/rtsp-test-server)
+
 ## Online demo URLs
 * rtsp://ipcam.online:8554/bars
 * rtsp://ipcam.online:8554/white
@@ -9,3 +11,4 @@ Simple RTSP server based on GStreamer.
 * rtsp://ipcam.online:8554/red
 * rtsp://ipcam.online:8554/green
 * rtsp://ipcam.online:8554/blue
+
