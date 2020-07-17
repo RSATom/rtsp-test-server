@@ -41,8 +41,13 @@ parts:
       - gstreamer1.0-plugins-base
       - gstreamer1.0-plugins-ugly
       - gstreamer1.0-libav
+      - libslang2
+      - libgpm2
 
 apps:
   rtsp-test-server:
     command: rtsp-test-server
     daemon: simple
+    plugs:
+      - network-bind
+      - network
