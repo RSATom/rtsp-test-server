@@ -14,10 +14,18 @@ int main(int argc, char *argv[])
     gst_init(&argc, &argv);
 
     GstRTSPServerPtr staticServer(gst_rtsp_server_new());
-    GstRTSPMountPointsPtr mountPointsPtr(gst_rtsp_mount_points_new());
-
     GstRTSPServer* server = staticServer.get();
+    if(!server) {
+        GST_ERROR("Fail to create rtsp server");
+        return -1;
+    }
+
+    GstRTSPMountPointsPtr mountPointsPtr(gst_rtsp_mount_points_new());
     GstRTSPMountPoints* mountPoints = mountPointsPtr.get();
+    if(!server) {
+        GST_ERROR("Fail to create mount points");
+        return -1;
+    }
 
     gst_rtsp_server_set_mount_points(server, mountPoints);
 
@@ -99,4 +107,6 @@ int main(int argc, char *argv[])
     gst_rtsp_server_attach(server, nullptr);
 
     g_main_loop_run(loop);
+
+    return 0;
 }
