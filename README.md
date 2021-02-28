@@ -1,4 +1,4 @@
-[![Snap Status](https://build.snapcraft.io/badge/RSATom/rtsp-test-server.svg)](https://build.snapcraft.io/user/RSATom/rtsp-test-server)
+[![rtsp-test-server](https://snapcraft.io/rtsp-test-server/badge.svg)](https://snapcraft.io/rtsp-test-server)
 
 Simple RTSP server based on GStreamer.
 
