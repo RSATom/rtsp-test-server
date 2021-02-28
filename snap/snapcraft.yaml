@@ -12,7 +12,7 @@ description: |
     rtsp://example.com:8554/green
     rtsp://example.com:8554/blue
 license: GPL-3.0
-grade: devel
+grade: stable
 confinement: strict
 
 architectures:
