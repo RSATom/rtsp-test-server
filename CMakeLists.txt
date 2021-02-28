@@ -5,6 +5,7 @@ project(rtsp-test-server)
 add_subdirectory(CxxPtr)
 
 find_package(PkgConfig REQUIRED)
+pkg_search_module(FMT REQUIRED fmt)
 pkg_search_module(GSTREAMER REQUIRED gstreamer-1.0)
 pkg_search_module(GSTREAMER_RTSP_SERVER REQUIRED gstreamer-rtsp-server-1.0)
 
@@ -17,9 +18,11 @@ file(GLOB SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE
+    ${FMT_INCLUDE_DIRS}
     ${GSTREAMER_INCLUDE_DIRS}
     ${GSTREAMER_RTSP_SERVER_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME}
+    ${FMT_LDFLAGS}
     ${GSTREAMER_LDFLAGS}
     ${GSTREAMER_RTSP_SERVER_LDFLAGS})
 

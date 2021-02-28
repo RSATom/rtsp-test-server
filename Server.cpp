@@ -1,16 +1,42 @@
+#include <string>
+#include <deque>
+
+#include <fmt/core.h>
+
 #include "CxxPtr/GlibPtr.h"
 #include "CxxPtr/GstRtspServerPtr.h"
 
-#define BARS  "/bars"
-#define WHITE "/white"
-#define BLACK "/black"
-#define RED   "/red"
-#define GREEN "/green"
-#define BLUE  "/blue"
+
+#define BARS  "bars"
+#define WHITE "white"
+#define BLACK "black"
+#define RED   "red"
+#define GREEN "green"
+#define BLUE  "blue"
 
 
 int main(int argc, char *argv[])
 {
+    const std::string h264PipelineTemplate =
+        "( videotestsrc pattern={} ! "
+        "x264enc ! video/x-h264, profile=baseline ! "
+        "rtph264pay name=pay0 pt=96 config-interval=-1 "
+        "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )";
+
+    const std::string vp8PipelineTemplate =
+        "( videotestsrc pattern={} ! "
+        "vp8enc ! rtpvp8pay name=pay0 pt=96 "
+        "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )";
+
+    const std::deque<std::pair<std::string, std::string>> createMountPoints = {
+        {BARS, "smpte100"},
+        {WHITE, "white"},
+        {BLACK, "black"},
+        {RED, "red"},
+        {GREEN, "green"},
+        {BLUE, "blue"},
+    };
+
     gst_init(&argc, &argv);
 
     GstRTSPServerPtr staticServer(gst_rtsp_server_new());
@@ -29,82 +55,32 @@ int main(int argc, char *argv[])
 
     gst_rtsp_server_set_mount_points(server, mountPoints);
 
-    {
-        GstRTSPMediaFactory* barsFactory = gst_rtsp_media_factory_new();
+    // h264
+    for(const auto& mountPoint: createMountPoints) {
+        GstRTSPMediaFactory* factory = gst_rtsp_media_factory_new();
         gst_rtsp_media_factory_set_transport_mode(
-            barsFactory, GST_RTSP_TRANSPORT_MODE_PLAY);
-        gst_rtsp_media_factory_set_launch(barsFactory,
-            "( videotestsrc pattern=smpte100 ! "
-            "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 "
-            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
-        gst_rtsp_media_factory_set_shared(barsFactory, TRUE);
-        gst_rtsp_mount_points_add_factory(mountPoints, BARS, barsFactory);
+            factory, GST_RTSP_TRANSPORT_MODE_PLAY);
+        gst_rtsp_media_factory_set_launch(factory,
+            fmt::format(h264PipelineTemplate, mountPoint.second).c_str());
+        gst_rtsp_media_factory_set_shared(factory, TRUE);
+        gst_rtsp_mount_points_add_factory(
+            mountPoints,
+            ("/" + mountPoint.first).c_str(),
+            factory);
     }
 
-    {
-        GstRTSPMediaFactory* whiteScreenFactory = gst_rtsp_media_factory_new();
+    // vp8
+    for(const auto& mountPoint: createMountPoints) {
+        GstRTSPMediaFactory* factory = gst_rtsp_media_factory_new();
         gst_rtsp_media_factory_set_transport_mode(
-            whiteScreenFactory, GST_RTSP_TRANSPORT_MODE_PLAY);
-        gst_rtsp_media_factory_set_launch(whiteScreenFactory,
-            "( videotestsrc pattern=white ! "
-            "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 "
-            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
-        gst_rtsp_media_factory_set_shared(whiteScreenFactory, TRUE);
-        gst_rtsp_mount_points_add_factory(mountPoints, WHITE, whiteScreenFactory);
-    }
-
-    {
-        GstRTSPMediaFactory* blackScreenFactory = gst_rtsp_media_factory_new();
-        gst_rtsp_media_factory_set_transport_mode(
-            blackScreenFactory, GST_RTSP_TRANSPORT_MODE_PLAY);
-        gst_rtsp_media_factory_set_launch(blackScreenFactory,
-            "( videotestsrc pattern=black ! "
-            "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 "
-            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
-        gst_rtsp_media_factory_set_shared(blackScreenFactory, TRUE);
-        gst_rtsp_mount_points_add_factory(mountPoints, BLACK, blackScreenFactory);
-    }
-
-    {
-        GstRTSPMediaFactory* redScreenFactory = gst_rtsp_media_factory_new();
-        gst_rtsp_media_factory_set_transport_mode(
-            redScreenFactory, GST_RTSP_TRANSPORT_MODE_PLAY);
-        gst_rtsp_media_factory_set_launch(redScreenFactory,
-            "( videotestsrc pattern=red ! "
-            "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 "
-            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
-        gst_rtsp_media_factory_set_shared(redScreenFactory, TRUE);
-        gst_rtsp_mount_points_add_factory(mountPoints, RED, redScreenFactory);
-    }
-
-    {
-        GstRTSPMediaFactory* greenScreenFactory = gst_rtsp_media_factory_new();
-        gst_rtsp_media_factory_set_transport_mode(
-            greenScreenFactory, GST_RTSP_TRANSPORT_MODE_PLAY);
-        gst_rtsp_media_factory_set_launch(greenScreenFactory,
-            "( videotestsrc pattern=green ! "
-            "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 "
-            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
-        gst_rtsp_media_factory_set_shared(greenScreenFactory, TRUE);
-        gst_rtsp_mount_points_add_factory(mountPoints, GREEN, greenScreenFactory);
-    }
-
-    {
-        GstRTSPMediaFactory* blueScreenFactory = gst_rtsp_media_factory_new();
-        gst_rtsp_media_factory_set_transport_mode(
-            blueScreenFactory, GST_RTSP_TRANSPORT_MODE_PLAY);
-        gst_rtsp_media_factory_set_launch(blueScreenFactory,
-            "( videotestsrc pattern=blue ! "
-            "x264enc ! video/x-h264, profile=baseline ! "
-            "rtph264pay name=pay0 pt=96 config-interval=-1 "
-            "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )");
-        gst_rtsp_media_factory_set_shared(blueScreenFactory, TRUE);
-        gst_rtsp_mount_points_add_factory(mountPoints, BLUE, blueScreenFactory);
+            factory, GST_RTSP_TRANSPORT_MODE_PLAY);
+        gst_rtsp_media_factory_set_launch(factory,
+            fmt::format(vp8PipelineTemplate, mountPoint.second).c_str());
+        gst_rtsp_media_factory_set_shared(factory, TRUE);
+        gst_rtsp_mount_points_add_factory(
+            mountPoints,
+            ("/" + mountPoint.first + "-vp8").c_str(),
+            factory);
     }
 
     GMainLoopPtr loopPtr(g_main_loop_new(nullptr, FALSE));

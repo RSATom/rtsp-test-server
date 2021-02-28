@@ -11,4 +11,10 @@ Simple RTSP server based on GStreamer.
 * rtsp://ipcam.online:8554/red
 * rtsp://ipcam.online:8554/green
 * rtsp://ipcam.online:8554/blue
+* rtsp://ipcam.online:8554/bars-vp8
+* rtsp://ipcam.online:8554/white-vp8
+* rtsp://ipcam.online:8554/black-vp8
+* rtsp://ipcam.online:8554/red-vp8
+* rtsp://ipcam.online:8554/green-vp8
+* rtsp://ipcam.online:8554/blue-vp8
 
