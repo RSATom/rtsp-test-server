@@ -4,13 +4,6 @@ version: git
 summary: Simple server providing some test rtsp streams
 description: |
     Based on GStreamer RTSP Server.
-    Available urls:
-    rtsp://example.com:8554/bars
-    rtsp://example.com:8554/white
-    rtsp://example.com:8554/black
-    rtsp://example.com:8554/red
-    rtsp://example.com:8554/green
-    rtsp://example.com:8554/blue
 license: GPL-3.0
 grade: stable
 confinement: strict
