@@ -1,7 +1,7 @@
 #include <string>
 #include <deque>
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 #include "CxxPtr/GlibPtr.h"
 #include "CxxPtr/GstRtspServerPtr.h"

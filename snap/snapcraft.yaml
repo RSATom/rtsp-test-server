@@ -34,6 +34,7 @@ parts:
     build-packages:
       - g++
       - make
+      - libfmt-dev
       - libgstreamer1.0-dev
       - libgstrtspserver-1.0-dev
     stage-packages:
