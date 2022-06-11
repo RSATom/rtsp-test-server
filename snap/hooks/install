@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+cp "$SNAP/opt/$SNAP_NAME/etc/rtsp-test-server.conf.sample" "$SNAP_COMMON/rtsp-test-server.conf"

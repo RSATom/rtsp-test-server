@@ -3,7 +3,23 @@ base: core20
 version: git
 summary: Simple server providing some test rtsp streams
 description: |
-    Based on GStreamer RTSP Server.
+  Based on GStreamer RTSP Server.
+
+  **Config file location:** /var/snap/rtsp-test-server/common/rtsp-test-server.conf
+
+  **Available urls:**
+  * rtsp://localhost:8554/bars
+  * rtsp://localhost:8554/white
+  * rtsp://localhost:8554/black
+  * rtsp://localhost:8554/red
+  * rtsp://localhost:8554/green
+  * rtsp://localhost:8554/blue
+  * rtsp://localhost:8554/bars-vp8
+  * rtsp://localhost:8554/white-vp8
+  * rtsp://localhost:8554/black-vp8
+  * rtsp://localhost:8554/red-vp8
+  * rtsp://localhost:8554/green-vp8
+  * rtsp://localhost:8554/blue-vp8
 license: GPL-3.0
 grade: stable
 confinement: strict
@@ -30,6 +46,8 @@ parts:
       - g++
       - make
       - libfmt-dev
+      - libspdlog-dev
+      - libconfig-dev
       - libgstreamer1.0-dev
       - libgstrtspserver-1.0-dev
     stage-packages:
@@ -39,6 +57,7 @@ parts:
       - gstreamer1.0-libav
       - libslang2
       - libgpm2
+      - libconfig9
 
 apps:
   rtsp-test-server:
