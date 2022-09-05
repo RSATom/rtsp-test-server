@@ -58,6 +58,7 @@ parts:
       - libslang2
       - libgpm2
       - libconfig9
+      - libspdlog1
 
 apps:
   rtsp-test-server:
