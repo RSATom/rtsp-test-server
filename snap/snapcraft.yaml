@@ -30,7 +30,7 @@ architectures:
   - build-on: arm64
 
 environment:
-  GST_DEBUG: 3
+  GST_DEBUG: 2
   GST_DEBUG_NO_COLOR: 1
   GST_PLUGIN_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gstreamer-1.0
   GST_PLUGIN_SYSTEM_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gstreamer-1.0
