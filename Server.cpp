@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
         "( videotestsrc pattern={} ! "
         "x264enc ! video/x-h264, profile=baseline ! "
         "rtph264pay name=pay0 pt=96 config-interval=-1 "
-        "audiotestsrc ! opusenc ! rtpopuspay name=pay1 pt=97 )";
+        "audiotestsrc ! alawenc ! rtppcmapay name=pay1 pt=8 )";
 
     const std::string vp8PipelineTemplate =
         "( videotestsrc pattern={} ! "
